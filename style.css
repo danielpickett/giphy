@@ -98,11 +98,13 @@ img {
   right: 5px;
   top: 5px;
   z-index: 4;
-  border: 3px solid white;
+  color: rgba(255,255,255,1);
+  border: 3px solid rgba(255,255,255,1);
+  opacity: 1;
   line-height: 0.57;
   padding: 2px;
   border-radius: 7px;
-  box-shadow: 0 0 20px rgba(0,0,0,1);
+  /* box-shadow: 0 0 20px rgba(0,0,0,1); */
   background-color: rgba(0,0,0,0.5);
   cursor: pointer;
   display: none;
@@ -110,6 +112,14 @@ img {
 
 .img-wrapper:hover span {
   display: block;
+  opacity: .5;
+
+}
+
+.img-wrapper:hover span:hover {
+  color: white;
+  border: 3px solid white;
+  opacity: 1;
 }
 
 a {
@@ -122,11 +132,13 @@ a {
 
 #load-more span {
   display: block;
+  color: white;
   border: 2px solid white;
   margin: 6px;
   padding: 5px;
   cursor: pointer;
 }
+
 
 #lightbox {
   position: fixed;
