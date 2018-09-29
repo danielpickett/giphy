@@ -61,4 +61,3 @@ function closeLightbox() {
 document.getElementById('lightbox').addEventListener('click', () => {
   closeLightbox();
 });
-
