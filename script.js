@@ -27,7 +27,7 @@ function getGifs(){
     for (item of data.data) {
       let html = '<div class="img-wrapper"><img width="' + item.images.fixed_height.width + '" height="' + item.images.fixed_height.height + '" src="' + item.images.fixed_height.url + '">';
       if (item.images.original.height > (parseInt(item.images.fixed_height.height) + parseInt(15))) {
-        console.log(item.images.original.height + ' > ' + (parseInt(item.images.fixed_height.height) + parseInt(15)));
+        //console.log(item.images.original.height + ' > ' + (parseInt(item.images.fixed_height.height) + parseInt(15)));
         html = html + '<span onclick="openLightbox(\'' + item.images.original.url + '\', \'' + item.images.original.width + '\', \'' + item.images.original.height + '\');">+</span>';
       }
       
