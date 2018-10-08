@@ -44,7 +44,6 @@ function loadImage(imageCollection, i){
     document.getElementById('output').appendChild(img);
   }
   //here's a new note!
-  //here's a second note!
 }
 
 
