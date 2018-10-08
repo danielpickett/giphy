@@ -1,8 +1,9 @@
-$("#search-input").focus();
+//$("#search-input").focus();
 
 let query;
 let result;
 let offset = 0;
+let counter = 0;
 
 document.getElementById('search-input').addEventListener('keyup', function(event){
   event.preventDefault();
@@ -10,37 +11,55 @@ document.getElementById('search-input').addEventListener('keyup', function(event
     query = document.getElementById('search-input').value;
     query = query.split(' ').join('+');
     console.log(query);
-    getGifs();
     $('#output').html('');
+    getGifs();
+    
   }
 });
 
 
+
+
+
 function getGifs(){
+
   let queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=z2aAdK0B5G97BdECKFeHRER9OBWFlcNb&limit=30&sort=relevant&offset=" + offset;
   console.log(queryUrl);
 
   var xhr = $.get(queryUrl);
-  xhr.done(function(data) { 
-    
-    console.log(data);
-    for (item of data.data) {
-      let html = '<div class="img-wrapper"><img width="' + item.images.fixed_height.width + '" height="' + item.images.fixed_height.height + '" src="' + item.images.fixed_height.url + '">';
-      if (item.images.original.height > (parseInt(item.images.fixed_height.height) + parseInt(15))) {
-        console.log(item.images.original.height + ' > ' + (parseInt(item.images.fixed_height.height) + parseInt(15)));
-        html = html + '<span onclick="openLightbox(\'' + item.images.original.url + '\', \'' + item.images.original.width + '\', \'' + item.images.original.height + '\');">+</span>';
-      }
-      
-      html = html + '</div>';
-
-      $('#output').append(html);
-      
-    }
-    $('#load-more').show();
-    offset = offset + 30;
+  xhr.done(function(response) {
+    loadImage(response, 0);
   });
 }
 
+function loadImage(imageCollection, i){
+  let img = document.createElement('img');
+  img.src = imageCollection.data[i].images.fixed_height.url;
+  img.setAttribute('data-loaded', 'false');
+  if ( i < imageCollection.data.length - 1) {
+    img.onload = function(){
+      this.setAttribute('data-loaded', 'true');
+      loadImage(imageCollection, ++i);
+    }
+    document.getElementById('output').appendChild(img);
+  }
+  //here's a new note!
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// LIGHTBOX FUNCTIONS
 function openLightbox(imgUrl, imgWidth, imgHeight) {
   let html = '<div class="lightbox-img-wrapper"><img src="' + imgUrl + '" height="' + imgHeight + '" width="' + imgWidth + '"></div>';
   let lightbox = document.getElementById('lightbox');
