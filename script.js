@@ -32,6 +32,7 @@ function getGifs(){
   var xhr = $.get(queryUrl);
   xhr.done(function(response) {
     //loadImage(response, 0);
+    console.log(response);
     buildSkeleton(response);
   });
 }
@@ -39,10 +40,37 @@ function getGifs(){
 function buildSkeleton(imageCollection) {
   console.log(imageCollection)
   for (let i = 0; i < imageCollection.data.length; i++) {
-    $output.append('<div class="img-wrapper" style="height:' + imageCollection.data[i].images.fixed_height.height + 'px;  width: ' + imageCollection.data[i].images.fixed_height.width + 'px;" data-load-status="empty"></div>');
+    $output.append('<div class="img-wrapper" id="' + imageCollection.data[i].id + '" style="height:' + imageCollection.data[i].images.fixed_height.height + 'px; width: ' + imageCollection.data[i].images.fixed_height.width + 'px;" data-load-status="empty"></div>');
   }
-  loadImage(imageCollection, $('.img-wrapper'), 0);
+  loadingSweep();
 }
+
+function loadingSweep() {
+  let $arr = $('.img-wrapper[data-load-status=empty]');
+  for (let i = 0; i < $arr.length; i++) {
+    console.log($arr[i]);
+    let img = document.createElement('img');
+    img.src = 'https://media0.giphy.com/media/' + $arr[i].id + '/200.gif';
+    img.onload = function() {
+      console.log(this);
+      this.parentElement.setAttribute('data-load-status', 'loaded');
+    };
+    $arr[i].append(img);
+    $arr[i].setAttribute('data-load-status', 'loading');
+  }
+}
+
+function cancel() {
+  window.stop();
+  $('.img-wrapper[data-load-status=loading]').attr('data-load-status', 'empty');
+  $('.img-wrapper[data-load-status=empty] img').remove('');
+}
+
+
+
+
+
+
 
 function loadImage(imageCollection, $imgWrapperArr, i){
   console.log('running loadImage');
@@ -52,21 +80,8 @@ function loadImage(imageCollection, $imgWrapperArr, i){
     loadImage(imageCollection, $('.img-wrapper[data-load-status=empty]'), ++i);
   };
   $imgWrapperArr[i].append(img);
-  $imgWrapperArr[i].attr('data-load-status', 'loading')
+  $imgWrapperArr[i].setAttribute('data-load-status', 'loading');
 }
-
-// function loadImage(imageCollection, i){
-//   let img = document.createElement('img');
-//   img.src = imageCollection.data[i].images.fixed_height.url;
-//   img.setAttribute('data-loaded', 'false');
-//   if ( i < imageCollection.data.length - 1) {
-//     img.onload = function(){
-//       this.setAttribute('data-loaded', 'true');
-//       loadImage(imageCollection, ++i);
-//     }
-//     $output.append(img);
-//   }
-// }
 
 
 
