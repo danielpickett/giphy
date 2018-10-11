@@ -1,17 +1,20 @@
-//$("#search-input").focus();
+
+let $output = $('#output');
+let $input = $('#search-input');
+//$input.focus();
 
 let query;
 let result;
 let offset = 0;
 let counter = 0;
 
-document.getElementById('search-input').addEventListener('keyup', function(event){
+$input.on('keyup', function(event){
   event.preventDefault();
   if ( event.keyCode === 13 ) {
-    query = document.getElementById('search-input').value;
+    query = $input.val();
     query = query.split(' ').join('+');
     console.log(query);
-    $('#output').html('');
+    $output.html('');
     getGifs();
     
   }
@@ -28,22 +31,42 @@ function getGifs(){
 
   var xhr = $.get(queryUrl);
   xhr.done(function(response) {
-    loadImage(response, 0);
+    //loadImage(response, 0);
+    buildSkeleton(response);
   });
 }
 
-function loadImage(imageCollection, i){
+function buildSkeleton(imageCollection) {
+  console.log(imageCollection)
+  for (let i = 0; i < imageCollection.data.length; i++) {
+    $output.append('<div class="img-wrapper" style="height:' + imageCollection.data[i].images.fixed_height.height + 'px;  width: ' + imageCollection.data[i].images.fixed_height.width + 'px;" data-load-status="empty"></div>');
+  }
+  loadImage(imageCollection, $('.img-wrapper'), 0);
+}
+
+function loadImage(imageCollection, $imgWrapperArr, i){
+  console.log('running loadImage');
   let img = document.createElement('img');
   img.src = imageCollection.data[i].images.fixed_height.url;
-  img.setAttribute('data-loaded', 'false');
-  if ( i < imageCollection.data.length - 1) {
-    img.onload = function(){
-      this.setAttribute('data-loaded', 'true');
-      loadImage(imageCollection, ++i);
-    }
-    document.getElementById('output').appendChild(img);
-  }
+  img.onload = function() {
+    loadImage(imageCollection, $('.img-wrapper[data-load-status=empty]'), ++i);
+  };
+  $imgWrapperArr[i].append(img);
+  $imgWrapperArr[i].attr('data-load-status', 'loading')
 }
+
+// function loadImage(imageCollection, i){
+//   let img = document.createElement('img');
+//   img.src = imageCollection.data[i].images.fixed_height.url;
+//   img.setAttribute('data-loaded', 'false');
+//   if ( i < imageCollection.data.length - 1) {
+//     img.onload = function(){
+//       this.setAttribute('data-loaded', 'true');
+//       loadImage(imageCollection, ++i);
+//     }
+//     $output.append(img);
+//   }
+// }
 
 
 
