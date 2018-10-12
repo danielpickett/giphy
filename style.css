@@ -163,6 +163,13 @@ a {
   display: block;
 }
 
+#lightbox img.fully-loaded {
+  border: 2px solid green;
+}
+#lightbox img:not(.fully-loaded) {
+  border: 2px solid red;
+}
+
 .lightbox-img-wrapper {
   position: relative;
 }

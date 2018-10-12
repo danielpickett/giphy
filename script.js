@@ -92,6 +92,7 @@ function openLightbox(imgUrl, imgWidth, imgHeight) {
   img.height = imgHeight;
   img.width = imgWidth;
   img.onload = function(){
+    img.classList.add('fully-loaded');
     loadingSweep();
   };
   $('.lightbox-img-wrapper').append(img);
