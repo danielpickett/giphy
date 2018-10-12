@@ -40,20 +40,20 @@ function getGifs(){
 function buildSkeleton(imageCollection) {
   console.log(imageCollection)
   for (let i = 0; i < imageCollection.data.length; i++) {
-    $output.append('<div class="img-wrapper" id="' + imageCollection.data[i].id + '" style="height:' + imageCollection.data[i].images.fixed_height.height + 'px; width: ' + imageCollection.data[i].images.fixed_height.width + 'px;" data-load-status="empty"></div>');
+    $output.append('<div class="img-wrapper" id="' + imageCollection.data[i].id + '" style="height:' + imageCollection.data[i].images.fixed_height.height + 'px; width: ' + imageCollection.data[i].images.fixed_height.width + 'px;" data-img-loaded="false"></div>');
   }
   loadingSweep();
 }
 
 function loadingSweep() {
-  let $arr = $('.img-wrapper[data-load-status=empty]');
+  let $arr = $('.img-wrapper[data-img-loaded=false]');
   for (let i = 0; i < $arr.length; i++) {
     console.log($arr[i]);
     let img = document.createElement('img');
     img.src = 'https://media0.giphy.com/media/' + $arr[i].id + '/200.gif';
     img.onload = function() {
       console.log(this);
-      this.parentElement.setAttribute('data-load-status', 'loaded');
+      this.parentElement.setAttribute('data-img-loaded', 'true');
     };
     $arr[i].append(img);
     $arr[i].setAttribute('data-load-status', 'loading');
@@ -62,8 +62,7 @@ function loadingSweep() {
 
 function cancel() {
   window.stop();
-  $('.img-wrapper[data-load-status=loading]').attr('data-load-status', 'empty');
-  $('.img-wrapper[data-load-status=empty] img').remove('');
+  $('.img-wrapper[data-img-loaded=false] img').remove('');
 }
 
 
