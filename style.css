@@ -3,6 +3,7 @@
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
   background-color: black;
   text-transform: uppercase;
@@ -10,6 +11,8 @@ body {
   font-size: 35px;
   color: white;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 #input {
@@ -128,6 +131,10 @@ a {
 
 #load-more {
   display: none;
+  background-color: black;
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
 }
 
 #load-more span {
@@ -146,7 +153,7 @@ a {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0,0,0,.95);
+  background-color: rgba(0,0,0,.5);
   align-items: center;
   justify-content: center;
   z-index: 100;
