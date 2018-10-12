@@ -1,15 +1,11 @@
-
 $('#loading-text').remove();
 
 let initialHtml = '<div id="lightbox" style="display: none;"></div><div id="input"><input type="text" id="search-input" value="" placeholder="search gifs"></div><div id="output"></div><div id="load-more" onclick="getGifs()"><span>Load more</span></div>';
 $(document.body).prepend(initialHtml);
 
-// debugger;
 let $output = $('#output');
 let $input = $('#search-input');
-//$input.focus();
-
-
+$input.focus();
 
 let query;
 let result;
@@ -27,10 +23,6 @@ $input.on('keyup', function(event){
   }
 });
 
-
-
-
-
 function getGifs(){
 
   let queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + query + "&api_key=z2aAdK0B5G97BdECKFeHRER9OBWFlcNb&limit=30&sort=relevant&offset=" + offset;
@@ -38,7 +30,6 @@ function getGifs(){
 
   var xhr = $.get(queryUrl);
   xhr.done(function(response) {
-    //loadImage(response, 0);
     console.log(response);
     buildSkeleton(response);
   }); 
@@ -64,7 +55,6 @@ function buildSkeleton(imageCollection) {
 }
 
 function loadingSweep() {
-  // debugger;
   let $arr = $('.img-wrapper[data-img-loaded=false]');
   for (let i = 0; i < $arr.length; i++) {
     console.log($arr[i]);
@@ -92,7 +82,6 @@ function cancel() {
 // LIGHTBOX FUNCTIONS
 function openLightbox(imgUrl, imgWidth, imgHeight) {
   cancel();
-  //<img src="' + imgUrl + '" height="' + imgHeight + '" width="' + imgWidth + '">
   let html = '<div class="lightbox-img-wrapper"></div>';
   let lightbox = document.getElementById('lightbox');
   lightbox.innerHTML = html;
