@@ -17,7 +17,7 @@ $input.on('keyup', function(event){
   if ( event.keyCode === 13 ) {
     query = $input.val();
     query = query.split(' ').join('+');
-    console.log(query);
+    // console.log(query);
     $output.html('');
     getGifs();
   }
@@ -30,7 +30,6 @@ function getGifs(){
 
   var xhr = $.get(queryUrl);
   xhr.done(function(response) {
-    console.log(response);
     buildSkeleton(response);
   }); 
 }
@@ -40,13 +39,14 @@ function buildSkeleton(imageCollection) {
   for (let i = 0; i < imageCollection.data.length; i++) {
     let data = imageCollection.data[i];
     let images = data.images;
-    let html = '<div class="img-wrapper" id="' + data.id + '" style="height:' + images.fixed_height.height + 'px; width: ' + images.fixed_height.width + 'px;" data-img-loaded="false">'
+    let html = '<div class="img-wrapper" id="' + data.id + '" style="height:' + images.fixed_height.height + 'px; width: ' + images.fixed_height.width + 'px;" data-load-status="none">'
+    html += '<span class="load-indicator"></span>';
     
     if (images.original.height > (parseInt(images.fixed_height.height) + parseInt(15))) {
-      console.log(images.original.height + ' > ' + (parseInt(images.fixed_height.height) + parseInt(15)));
-      html = html + '<span onclick="openLightbox(\'' + images.original.url + '\', \'' + images.original.width + '\', \'' + images.original.height + '\');">+</span>';
+      // console.log(images.original.height + ' > ' + (parseInt(images.fixed_height.height) + parseInt(15)));
+      html += '<span class="plus" onclick="openLightbox(\'' + images.original.url + '\', \'' + images.original.width + '\', \'' + images.original.height + '\');">+</span>';
     }
-    html = html + '</div>'
+    html += '</div>';
     $output.append(html);
   }
   loadingSweep();
@@ -55,26 +55,39 @@ function buildSkeleton(imageCollection) {
 }
 
 function loadingSweep() {
-  let $arr = $('.img-wrapper[data-img-loaded=false]');
+  let $arr = $('.img-wrapper[data-load-status=none]');
   for (let i = 0; i < $arr.length; i++) {
-    console.log($arr[i]);
+    // console.log($arr[i]);
     let img = document.createElement('img');
     img.src = 'https://media0.giphy.com/media/' + $arr[i].id + '/200.gif';
+    img.draggable = false;
+    img.onmouseover = function() {
+      if (this.height > 0 && (this.parentElement.getAttribute('data-load-status') != 'loaded') ) {
+        this.parentElement.classList.add('loading');
+      } else {
+        this.parentElement.classList.remove('loading');
+      }
+    };
+    img.onmouseout = function() {
+      this.parentElement.classList.remove('loading');
+    };
     img.onload = function() {
-      console.log(this);
-      this.parentElement.setAttribute('data-img-loaded', 'true');
+      // console.log(this);
+      this.parentElement.setAttribute('data-load-status', 'loaded');
+      this.parentElement.classList.remove('loading');
+      this.setAttribute('draggable', true);
     };
     $arr[i].append(img);
-    $arr[i].setAttribute('data-img-loaded', 'loading');
+    $arr[i].setAttribute('data-load-status', 'pending');
 
   }
 }
 
 function cancel() {
   window.stop();
-  console.log('window stopped');
-  $('.img-wrapper[data-img-loaded=loading]').attr('data-img-loaded', 'false');
-  $('.img-wrapper[data-img-loaded=false] img').remove('');
+  // console.log('window stopped');
+  $('.img-wrapper[data-load-status=pending]').attr('data-load-status', 'none');
+  $('.img-wrapper[data-load-status=none] img').remove('');
 }
 
 
@@ -91,8 +104,10 @@ function openLightbox(imgUrl, imgWidth, imgHeight) {
   img.src = imgUrl;
   img.height = imgHeight;
   img.width = imgWidth;
+  img.draggable = false;
   img.onload = function(){
-    img.classList.add('fully-loaded');
+    this.parentElement.classList.add('fully-loaded');
+    this.setAttribute('draggable', true)
     loadingSweep();
   };
   $('.lightbox-img-wrapper').append(img);

@@ -67,6 +67,7 @@ img {
   margin: 3px;
   position: relative;
   text-align: center;
+  cursor: auto;
 }
 
 .img-wrapper::before {
@@ -96,7 +97,7 @@ img {
   z-index: 0
 }
 
-.img-wrapper span {
+.img-wrapper span.plus {
   position: absolute;
   right: 5px;
   top: 5px;
@@ -113,13 +114,34 @@ img {
   display: none;
 }
 
-.img-wrapper:hover span {
+.img-wrapper.loading {
+  cursor: not-allowed;
+}
+
+.img-wrapper[data-load-status=loaded] {
+  cursor: grab;
+}
+
+.img-wrapper:not([data-load-status=loaded]) img {
+  /* pointer-events: none; */
+  cursor: not-allowed;
+}
+
+.img-wrapper.loading::before {
+  content: "still loading...";
+  z-index: 10;
+  color: white;
+  background-color: red;
+  pointer-events: none;
+}
+
+.img-wrapper:hover span.plus {
   display: block;
   opacity: .5;
 
 }
 
-.img-wrapper:hover span:hover {
+.img-wrapper:hover span.plus:hover {
   color: white;
   border: 3px solid white;
   opacity: 1;
@@ -163,11 +185,18 @@ a {
   display: block;
 }
 
-#lightbox img.fully-loaded {
-  border: 2px solid green;
+#lightbox .lightbox-img-wrapper.fully-loaded:hover {
+  cursor: grab;
 }
-#lightbox img:not(.fully-loaded) {
-  border: 2px solid red;
+#lightbox .lightbox-img-wrapper:hover:not(.fully-loaded) {
+  cursor: not-allowed;
+}
+#lightbox .lightbox-img-wrapper:hover:not(.fully-loaded)::before {
+  z-index: 3;
+  content: "still loading...";
+  color: white;
+  background-color: red;
+  pointer-events: none;
 }
 
 .lightbox-img-wrapper {
@@ -199,4 +228,10 @@ a {
   width: 100%;
   background-color: #131313;
   z-index: 0
+}
+
+
+@keyframes loading-bar {
+  0%   {width: 0%}
+  100% {width: 100%}
 }
