@@ -183,6 +183,9 @@ a {
 
 #lightbox img {
   display: block;
+  flex-grow: 1;
+  overflow: hidden;
+  object-fit: contain;
 }
 
 #lightbox .lightbox-img-wrapper.fully-loaded:hover {
@@ -201,6 +204,9 @@ a {
 
 .lightbox-img-wrapper {
   position: relative;
+  display: flex;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
 }
 
 .lightbox-img-wrapper::before {

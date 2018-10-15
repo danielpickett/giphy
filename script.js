@@ -1,6 +1,6 @@
 $('#loading-text').remove();
 
-let initialHtml = '<div id="lightbox" style="display: none;"></div><div id="input"><input type="text" id="search-input" value="" placeholder="search gifs"></div><div id="output"></div><div id="load-more" onclick="getGifs()"><span>Load more</span></div>';
+let initialHtml = '<div id="lightbox"></div><div id="input"><input type="text" id="search-input" value="" placeholder="search gifs"></div><div id="output"></div><div id="load-more" onclick="getGifs()"><span>Load more</span></div>';
 $(document.body).prepend(initialHtml);
 
 let $output = $('#output');
@@ -102,8 +102,8 @@ function openLightbox(imgUrl, imgWidth, imgHeight) {
 
   let img = document.createElement('img');
   img.src = imgUrl;
-  img.height = imgHeight;
-  img.width = imgWidth;
+  // img.height = imgHeight;
+  // img.width = imgWidth;
   img.draggable = false;
   img.onload = function(){
     this.parentElement.classList.add('fully-loaded');
