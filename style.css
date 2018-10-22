@@ -15,6 +15,7 @@ body {
   flex-direction: column;
 }
 
+
 #input {
   height: 72px;
   padding: 6px;
@@ -22,6 +23,9 @@ body {
   position: fixed;
   z-index: 1;
   background-color: black;
+}
+.initial-view #input {
+  position: relative;
 }
 
 input {
@@ -244,4 +248,50 @@ a {
 
 .lightbox-img-wrapper.fully-loaded::after {
   background-color: transparent;
+}
+
+
+
+
+
+
+
+
+/* INITIAL VIEW */
+
+body.initial-view {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.initial-view #input {
+  position: relative;
+  max-width: 400px;
+}
+
+#explainer {
+  text-align: left;
+  padding: 10px;
+  max-width: 280px;
+  color: #dadada;
+  margin-top: 20px;
+  font-size: 16px;
+  width: 100%;
+  text-transform: none;
+}
+
+#explainer h1 {
+  margin-top: 20px;
+  font-size: 130%;
+}
+
+#explainer ol {
+  margin: 0;
+  padding-left: 1.2em;
+}
+#explainer li {
+  margin: .75em 0;
+  line-height: 1.4em
 }
