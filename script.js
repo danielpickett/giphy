@@ -1,7 +1,7 @@
 $('#loading-text').remove();
 
 let explainer = "<h1>How to use:</h1>";
-explainer += "<ol><li>Type something, then press Enter</li><li>Drag a GIF to your desktop</li><li>Drag that GIF file from your desktop to wherever you'd like to share it, such as Slack or your favorite chat app</li></ol>";
+explainer += "<ol><li>Type something, then press Enter</li><li>Drag a GIF to your desktop</li><li>Drag that GIF from your desktop onto an app where you'd like to share it. I like to use it for Slack.</li></ol>";
 
 
 let initialHtml = '<div id="lightbox"></div><div id="input"><input type="text" id="search-input" value="" placeholder="search gifs"></div><div id="explainer">' + explainer + '</div><div id="output"></div><div id="load-more" onclick="getGifs()"><span>Load more</span></div>';
