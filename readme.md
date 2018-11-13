@@ -14,4 +14,4 @@ This app works great in Chrome, but in Firefox and Edge there's an issue (I'm no
 
 # More to Come
 
-I consider this project done and available for review early review, but there is some more commentary I will try to give if I have the time before the deadline this Friday.
+I consider this project done and available for early review, but there is some more commentary I will try to give if I have the time before the deadline this Friday.
