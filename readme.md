@@ -7,7 +7,3 @@ This is a clone of the Giphy website using Giphy's own API to enable search of g
 # Important Compatibility Note
 
 This app works great in Chrome, but in Firefox and Edge there's an issue (I'm not even checking IE). I think it's related to my use of `window.stop()`. When the little plus sign (+) button is clicked for the lightbox, all the gifs stop animating. It appears that in Firefox and Edge, `window.stop()` not only stops the loading of queued gifs, it also stops the animation of fully loaded gifs, and it never restarts them.
-
-# More to Come
-
-I consider this project done and available for early review, but there is some more commentary I will try to give if I have the time before the deadline this Friday.
